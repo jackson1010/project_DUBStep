@@ -46,14 +46,14 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             Credentials userDetails = (Credentials) userDetailsSvc.loadUserByUsername(username);
             if(null != userDetails){
-                //TODO: FIX AUTHORITIES
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null,null );
+                        userDetails, null,userDetails.getAuthorities() );
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 log.info("User Authenticated - Username: {} | UserID: {}",userDetails.getUsername(),userDetails.getUserId());
-            } else {
-
+            } else { //TODO: IMPROVE HANDLING
+                log.info("User Does Not Exist");
+                filterChain.doFilter(request, response);
             }
         }
 
