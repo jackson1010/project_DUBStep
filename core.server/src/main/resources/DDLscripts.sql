@@ -12,33 +12,20 @@ CREATE TABLE IF NOT EXISTS user_credentials (
     account_non_locked BOOLEAN NOT NULL,
     credentials_non_expired BOOLEAN NOT NULL,
     enabled BOOLEAN NOT NULL,
+    authority ENUM("USER","SUPERUSER","ADMIN") NOT NULL,
     PRIMARY KEY (user_id)
 );
 ALTER TABLE user_credentials AUTO_INCREMENT=10000;
 DESC user_credentials;
---+-------------------------+-------------------+------+-----+---------+----------------+
---| Field                   | Type              | Null | Key | Default | Extra          |
---+-------------------------+-------------------+------+-----+---------+----------------+
---| user_id                 | smallint unsigned | NO   | PRI | NULL    | auto_increment |
---| username                | varchar(30)       | NO   |     | NULL    |                |
---| password                | varchar(255)      | NO   |     | NULL    |                |
---| account_non_expired     | tinyint(1)        | NO   |     | NULL    |                |
---| account_non_locked      | tinyint(1)        | NO   |     | NULL    |                |
---| credentials_non_expired | tinyint(1)        | NO   |     | NULL    |                |
---| enabled                 | tinyint(1)        | NO   |     | NULL    |                |
---+-------------------------+-------------------+------+-----+---------+----------------+
-
-DROP TABLE IF EXISTS user_authorities;
-CREATE TABLE IF NOT EXISTS user_authorities(
-    user_id SMALLINT UNSIGNED NOT NULL,
-    authority ENUM('SUPERUSER','ADMIN'),
-    PRIMARY KEY (user_id,authority),
-    FOREIGN KEY(user_id) REFERENCES user_credentials(user_id)
-);
-DESC user_authorities;
---+-----------+---------------------------+------+-----+---------+-------+
---| Field     | Type                      | Null | Key | Default | Extra |
---+-----------+---------------------------+------+-----+---------+-------+
---| user_id   | smallint unsigned         | NO   | PRI | NULL    |       |
---| authority | enum('SUPERUSER','ADMIN') | NO   | PRI | NULL    |       |
---+-----------+---------------------------+------+-----+---------+-------+
+--+-------------------------+----------------------------------+------+-----+---------+----------------+
+--| Field                   | Type                             | Null | Key | Default | Extra          |
+--+-------------------------+----------------------------------+------+-----+---------+----------------+
+--| user_id                 | smallint unsigned                | NO   | PRI | NULL    | auto_increment |
+--| username                | varchar(30)                      | NO   |     | NULL    |                |
+--| password                | varchar(255)                     | NO   |     | NULL    |                |
+--| account_non_expired     | tinyint(1)                       | NO   |     | NULL    |                |
+--| account_non_locked      | tinyint(1)                       | NO   |     | NULL    |                |
+--| credentials_non_expired | tinyint(1)                       | NO   |     | NULL    |                |
+--| enabled                 | tinyint(1)                       | NO   |     | NULL    |                |
+--| authority               | enum('USER','SUPERUSER','ADMIN') | NO   |     | NULL    |                |
+--+-------------------------+----------------------------------+------+-----+---------+----------------+

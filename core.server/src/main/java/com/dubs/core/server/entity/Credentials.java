@@ -1,5 +1,6 @@
 package com.dubs.core.server.entity;
 
+import com.dubs.core.server.enums.Authority;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -51,19 +52,12 @@ public class Credentials implements UserDetails {
     @Column
     private boolean Enabled;
 
-    @Column
-    Set<SimpleGrantedAuthority> authorities;
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
     @Override
     public Collection<SimpleGrantedAuthority> getAuthorities() {
-        return this.authorities;
+        return Set.of(new SimpleGrantedAuthority(this.authority.name()));
     }
-
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_authorities",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "authority_id"))
-//    private Set<Authority> authoritys;
-
 
 }
