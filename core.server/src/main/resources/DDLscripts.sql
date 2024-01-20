@@ -28,33 +28,17 @@ DESC user_credentials;
 --| enabled                 | tinyint(1)        | NO   |     | NULL    |                |
 --+-------------------------+-------------------+------+-----+---------+----------------+
 
-DROP TABLE IF EXISTS authorities;
-CREATE TABLE IF NOT EXISTS authorities(
-    authority_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    authority VARCHAR(30) NOT NULL UNIQUE,
-    PRIMARY KEY (authority_id)
-);
-DESC authorities;
---+--------------+-------------------+------+-----+---------+----------------+
---| Field        | Type              | Null | Key | Default | Extra          |
---+--------------+-------------------+------+-----+---------+----------------+
---| authority_id | smallint unsigned | NO   | PRI | NULL    | auto_increment |
---| authority    | varchar(30)       | NO   | UNI | NULL    |                |
---+--------------+-------------------+------+-----+---------+----------------+
-
 DROP TABLE IF EXISTS user_authorities;
 CREATE TABLE IF NOT EXISTS user_authorities(
     user_id SMALLINT UNSIGNED NOT NULL,
-    authority_id SMALLINT UNSIGNED NOT NULL,
-    PRIMARY KEY (user_id,authority_id),
-    FOREIGN KEY(user_id) REFERENCES user_credentials(user_id),
-    FOREIGN KEY(authority_id) REFERENCES authorities(authority_id)
+    authority ENUM('SUPERUSER','ADMIN'),
+    PRIMARY KEY (user_id,authority),
+    FOREIGN KEY(user_id) REFERENCES user_credentials(user_id)
 );
-
 DESC user_authorities;
---+--------------+-------------------+------+-----+---------+-------+
---| Field        | Type              | Null | Key | Default | Extra |
---+--------------+-------------------+------+-----+---------+-------+
---| user_id      | smallint unsigned | NO   | PRI | NULL    |       |
---| authority_id | smallint unsigned | NO   | PRI | NULL    |       |
---+--------------+-------------------+------+-----+---------+-------+
+--+-----------+---------------------------+------+-----+---------+-------+
+--| Field     | Type                      | Null | Key | Default | Extra |
+--+-----------+---------------------------+------+-----+---------+-------+
+--| user_id   | smallint unsigned         | NO   | PRI | NULL    |       |
+--| authority | enum('SUPERUSER','ADMIN') | NO   | PRI | NULL    |       |
+--+-----------+---------------------------+------+-----+---------+-------+

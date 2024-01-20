@@ -7,9 +7,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name="user_credentials",
@@ -37,25 +39,24 @@ public class Credentials implements UserDetails {
     @Size(max = 120)
     private String password;
 
+    @Column
     private boolean AccountNonExpired;
 
+    @Column
     private boolean AccountNonLocked;
 
+    @Column
     private boolean CredentialsNonExpired;
 
+    @Column
     private boolean Enabled;
 
-    //TODO: FIX AUTHORITIES
-
-    @ManyToMany
-    @JoinTable(name = "user_authorities",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id"))
-    Collection<BasicAuthority> authorities;
+    @Column
+    Set<SimpleGrantedAuthority> authorities;
 
     @Override
-    public Collection<BasicAuthority> getAuthorities() {
-        return null;
+    public Collection<SimpleGrantedAuthority> getAuthorities() {
+        return this.authorities;
     }
 
 //    @ManyToMany(fetch = FetchType.LAZY)
