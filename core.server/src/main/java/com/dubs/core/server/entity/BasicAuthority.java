@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "authorities", uniqueConstraints = {@UniqueConstraint(columnNames = "authority")}
@@ -13,7 +16,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Authority {
+public class BasicAuthority implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +27,13 @@ public class Authority {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 30)
-    @Max(30)
     private com.dubs.core.server.enums.Authority authority;
+
+    @Override
+    public String getAuthority() {
+        return authority.name();
+    }
+
+    @ManyToMany(mappedBy = "authorities")
+    Set<Credentials> users;
 }

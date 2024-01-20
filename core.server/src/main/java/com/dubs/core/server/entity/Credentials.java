@@ -6,12 +6,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="user_credentials",
@@ -49,17 +47,22 @@ public class Credentials implements UserDetails {
 
     //TODO: FIX AUTHORITIES
 
-    Collection<? extends GrantedAuthority> authorities;
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "user_authorities",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id"))
-    private Set<Authority> authoritys;
+    Collection<BasicAuthority> authorities;
+
+    @Override
+    public Collection<BasicAuthority> getAuthorities() {
+        return null;
+    }
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "user_authorities",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "authority_id"))
+//    private Set<Authority> authoritys;
 
 
 }
