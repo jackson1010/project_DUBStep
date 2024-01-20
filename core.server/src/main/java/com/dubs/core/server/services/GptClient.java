@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "gptClient", url = "https://api.openai.com/v1")
+@FeignClient(name = "gptClient", url = "https://api.openai.com/v1/chat")
 public interface GptClient {
     @PostMapping("/completions")
     ChatGPTResponse sendPrompt(@RequestHeader("Authorization") String authorization, @RequestBody ChatGPTRequest request);

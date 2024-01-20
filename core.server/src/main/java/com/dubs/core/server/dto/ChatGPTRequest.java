@@ -8,19 +8,11 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
 public class ChatGPTRequest {
-
-    @Value("${openai.model}")
     private String model;
     private int n;
-    private List<Message> messages;
-    @Value("${openai.max-completions}")
-    private int maxCompletions;
-    @Value("${openai.temperature}")
     private double temperature;
-    @Value("${openai.max_tokens}")
-    private int maxTokens;
-
+    private int max_tokens;
+    private List<Message> messages;
 }

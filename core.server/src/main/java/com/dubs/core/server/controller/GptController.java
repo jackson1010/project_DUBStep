@@ -1,14 +1,10 @@
 package com.dubs.core.server.controller;
 
-import com.dubs.core.server.constants.Constants;
 import com.dubs.core.server.dto.ChatGPTRequest;
 import com.dubs.core.server.dto.ChatGPTResponse;
 import com.dubs.core.server.dto.Message;
 import com.dubs.core.server.services.GptClient;
-import feign.Feign;
 import feign.FeignException;
-import feign.gson.GsonDecoder;
-import feign.gson.GsonEncoder;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,20 +20,25 @@ import java.util.List;
 @RestController
 @RequestMapping("api")
 public class GptController {
+    @Value("${openai.api.key}")
+    private String gptKey;
+    @Value("${openai.model}")
+    private String model;
+    @Value("${openai.temperature}")
+    private double temperature;
+    @Value("${openai.max_tokens}")
+    private int max_tokens;
     private final GptClient gptClient;
 
-    private final String gptKey;
-
-    public GptController(GptClient gptClient, @Value("${gpt.api.key}") String gptKey) {
+    public GptController(GptClient gptClient) {
         this.gptClient = gptClient;
-        this.gptKey = gptKey;
     }
 
     @PostMapping("/gpt")
-    public ResponseEntity<String> getGPTResponse(@RequestBody String prompt) {
+    public ResponseEntity<String> getGPTResponse(@RequestBody String msg) {
         try {
-            ChatGPTRequest request = new ChatGPTRequest();
-            request.setMessages(List.of(new Message("user", prompt)));
+            ChatGPTRequest request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", msg)));
+            log.info(String.valueOf(request));
             ChatGPTResponse response = gptClient.sendPrompt("Bearer " + gptKey, request);
             return ResponseEntity.ok(response.getContent());
         } catch (FeignException e) {
