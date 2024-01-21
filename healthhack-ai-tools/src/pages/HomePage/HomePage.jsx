@@ -1,6 +1,6 @@
 const HomePage = () => {
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
+    /*<div className="bg-gray-100 min-h-screen p-8">
       <div className="max-w-2xl mx-auto">
         <h1 className="text-4xl font-bold mb-6">Welcome to Our Healthcare AI Platform</h1>
         <p className="text-lg text-gray-600 mb-8">
@@ -42,6 +42,9 @@ const HomePage = () => {
           Get Started
         </div>
       </div>
+    </div>*/
+    <div>
+      hello
     </div>
   );
 };
