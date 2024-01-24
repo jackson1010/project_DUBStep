@@ -1,5 +1,6 @@
-package com.dubs.core.server.services;
+package com.dubs.core.server.service;
 
+import com.dubs.core.server.client.TranslateClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

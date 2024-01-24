@@ -1,4 +1,4 @@
-package com.dubs.core.server.services;
+package com.dubs.core.server.client;
 
 import com.dubs.core.server.constants.Constants;
 import com.dubs.core.server.dto.ChatGPTRequest;

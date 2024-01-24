@@ -3,7 +3,7 @@ package com.dubs.core.server.controller;
 import com.dubs.core.server.dto.ChatGPTRequest;
 import com.dubs.core.server.dto.ChatGPTResponse;
 import com.dubs.core.server.dto.Message;
-import com.dubs.core.server.services.GptClient;
+import com.dubs.core.server.client.GptClient;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;

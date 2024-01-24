@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dubs.core.server.dto.TranslateRequest;
 import com.dubs.core.server.dto.TranslateResponse;
-import com.dubs.core.server.services.TranslateService;
+import com.dubs.core.server.service.TranslateService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
