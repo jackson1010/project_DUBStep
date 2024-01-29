@@ -1,13 +1,10 @@
-import { Box, Button, Flex, Image, Input, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
+import Login from "./Login";
+import Signup from "./Signup";
 
 const AuthForm = () => {
 	const [isLogin, setIsLogin] = useState(true);
-	const [inputs, setInputs] = useState({
-		email: '',
-		password: '',
-		confirmPassword: ''
-	});
 
 	return (
 		<>
@@ -15,14 +12,7 @@ const AuthForm = () => {
 				<VStack spacing={4}>
 					<Image src='/logo.png' h={24} cursor={"pointer"} alt='Healthhack logo' />
 					
-					{!isLogin ? <Input placeholder='Confirm Password' 
-						value={inputs.confirmPassword}
-						onChange={(e) => setInputs({...inputs,confirmPassword:e.target.value})}
-					fontSize={14} type='password' /> : null}
-
-					<Button w={"full"} colourScheme='blue' size={"sm"} fontSize={14}>
-						{isLogin ? "Log in" : "Sign Up"}
-					</Button>
+					{isLogin ? <Login /> : <Signup />}
 
 					{/* ---------------- OR -------------- */}
 					<Flex alignItems={"center"} justifyContent={"center"} my={4} gap={1} w={"full"}>
