@@ -4,6 +4,7 @@ import com.dubs.core.server.dto.ChatGPTRequest;
 import com.dubs.core.server.dto.ChatGPTResponse;
 import com.dubs.core.server.dto.Message;
 import com.dubs.core.server.client.GptClient;
+import com.dubs.core.server.dto.Prompt;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +36,16 @@ public class GptController {
     }
 
     @PostMapping("/gpt")
-    public ResponseEntity<String> getGPTResponse(@RequestBody String msg) {
-        try {
-            ChatGPTRequest request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", msg)));
-            log.info(String.valueOf(request));
+    public ResponseEntity<String> getGPTResponse(@RequestBody String msg, int number) {
+        ChatGPTRequest request;
+        if(number==1){
+            request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.firstPrompt + msg)));
+        }else{
+            request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.secondPrompt + msg)));
+        }
+        log.info(String.valueOf(request));
+
+        try{
             ChatGPTResponse response = gptClient.sendPrompt("Bearer " + gptKey, request);
             return ResponseEntity.ok(response.getContent());
         } catch (FeignException e) {
