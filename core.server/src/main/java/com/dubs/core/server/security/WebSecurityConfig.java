@@ -54,7 +54,7 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 //TODO: CHANGE TO VALUE IMPORT
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/auth/signup").permitAll()
+                    .requestMatchers("/api/auth/createAccount").permitAll()
                     .requestMatchers("/api/auth/signin").permitAll()
                     .requestMatchers("/api/auth/**").authenticated()
                     .anyRequest().permitAll()

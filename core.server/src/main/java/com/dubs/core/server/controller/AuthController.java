@@ -93,11 +93,11 @@ public class AuthController {
 
     @PostMapping("/updateProfile")
     public ResponseEntity<String> updateProfile(@RequestBody UserProfile userProfile){
-        if(userDetailsSvc.existsByUserId(userProfile.getUserId())){
+        if(!userDetailsSvc.existsByUserId(userProfile.getUserId())){
             JsonObject response = Json.createObjectBuilder().add("Create Account Error", "UserID does not Exist").build();
             return ResponseEntity.badRequest().body(response.toString());
         }
-        userDetailsSvc.save(userProfile);
+        userDetailsSvc.updateProfile(userProfile);
         JsonObject response = Json.createObjectBuilder().add("Update Profile ","Success").build();
         return ResponseEntity.ok().body(response.toString());
     }
@@ -105,25 +105,25 @@ public class AuthController {
 
     @PostMapping("/updateContact")
     public ResponseEntity<String> updateContact(@RequestBody ContactDetails contactDetails){
-        if(userDetailsSvc.existsByUserId(contactDetails.getUserId())){
+        if(!userDetailsSvc.existsByUserId(contactDetails.getUserId())){
             JsonObject response = Json.createObjectBuilder().add("Create Account Error", "UserID does not Exist").build();
             return ResponseEntity.badRequest().body(response.toString());
         }
-        userDetailsSvc.save(contactDetails);
+        userDetailsSvc.updateContacts(contactDetails);
         JsonObject response = Json.createObjectBuilder().add("Update Profile ","Success").build();
         return ResponseEntity.ok().body(response.toString());
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<String> loginUser(@RequestBody AuthRequest signinRequest){
+    public ResponseEntity<String> loginUser(@RequestBody AuthRequest signinRequest) throws JsonProcessingException{
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signinRequest.getUsername(), signinRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        AuthResponse response = new AuthResponse(jwtService.generateToken(signinRequest.getUsername()),
+        Credentials usercreds = (Credentials) authentication.getPrincipal();
+        AuthResponse response = new AuthResponse(usercreds.getUserId(),jwtService.generateToken(signinRequest.getUsername()),
                 authentication.getAuthorities().stream().toList().get(0).toString());
 
-        return ResponseEntity.ok(response.toString());
+        return ResponseEntity.ok().body(objectMapper.writeValueAsString(response));
 
     }
 

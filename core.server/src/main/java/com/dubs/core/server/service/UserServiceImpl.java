@@ -11,9 +11,10 @@ import com.dubs.core.server.repository.CredentialRepository;
 import com.dubs.core.server.repository.UserProfileRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,12 +80,35 @@ public class UserServiceImpl implements UserDetailsService {
         return true;
     }
 
-    public UserProfile save(UserProfile userProfile){
-        return userProfileRepository.save(userProfile);
+    public UserProfile updateProfile(UserProfile newProfile){
+        Optional<UserProfile> oldProfile = userProfileRepository.findByUserId(newProfile.getUserId());
+        if(oldProfile.isEmpty()){
+            throw new EmptyResultDataAccessException("user Profile does not exist",1);
+        } else { //done like this to preserve entity-ness?
+            UserProfile updatedProfile = oldProfile.get();
+            updatedProfile.setFirstName(newProfile.getFirstName());
+            updatedProfile.setLastName(newProfile.getLastName());
+            updatedProfile.setDateOfBirth(newProfile.getDateOfBirth());
+            updatedProfile.setGender(newProfile.getGender());
+            updatedProfile.setHeight(newProfile.getHeight());
+            updatedProfile.setWeight(newProfile.getWeight());
+            updatedProfile.setBloodType(newProfile.getBloodType());
+            return userProfileRepository.save(updatedProfile);
+        }
     }
 
-    public ContactDetails save(ContactDetails contactDetails){
-        return contactDetailsRepository.save(contactDetails);
+    public ContactDetails updateContacts(ContactDetails newContacts){
+        Optional<ContactDetails> oldContacts = contactDetailsRepository.findByUserId(newContacts.getUserId());
+        if(oldContacts.isEmpty()){
+            throw new EmptyResultDataAccessException("User Contacts does not exist",1);
+        } else { //done like this to preserve entity-ness?
+            ContactDetails updatedContacts = oldContacts.get();
+            updatedContacts.setAddress(newContacts.getAddress());
+            updatedContacts.setEmail(newContacts.getEmail());
+            updatedContacts.setHomeNumber(newContacts.getHomeNumber());
+            updatedContacts.setMobileNumber(newContacts.getMobileNumber());
+            return contactDetailsRepository.save(updatedContacts);
+        }
     }
 
     public Optional<UserProfile> findProfileByUserId(Integer userID){
