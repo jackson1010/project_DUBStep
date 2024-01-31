@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 //TODO: remove field injection
     @Autowired
-UserServiceImpl userDetailsServiceImpl;
+    UserServiceImpl userDetailsServiceImpl;
 
     @Autowired
     JWTAuthFilter jwtAuthFilter;

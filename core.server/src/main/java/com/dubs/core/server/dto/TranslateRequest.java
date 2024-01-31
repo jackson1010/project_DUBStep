@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class TranslateRequest {
-     @JsonProperty("text")
+    @JsonProperty("text")
     private String q;
     @JsonProperty(required = false)
     private String source;

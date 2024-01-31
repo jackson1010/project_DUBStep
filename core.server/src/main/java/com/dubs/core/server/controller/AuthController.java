@@ -20,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -40,6 +41,9 @@ public class AuthController {
     @Autowired
     ObjectMapper objectMapper;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     /**
      * @return 200 Success with userId for subsequent calls or 400 BadRequest if username already exists
      */
@@ -53,6 +57,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(response.toString());
         }
 
+        signupRequest.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
         //TODO:TEST user creation with null, else 
         Credentials createdUser = userDetailsSvc.createNewUser(signupRequest);
         JsonObject response = Json.createObjectBuilder().add("Create Account Success",createdUser.getUserId()).build();

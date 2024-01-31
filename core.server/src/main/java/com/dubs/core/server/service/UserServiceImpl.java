@@ -32,8 +32,7 @@ public class UserServiceImpl implements UserDetailsService {
     ContactDetailsRepository contactDetailsRepository;
     
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+
 
 
     public UserDetails loadUserByUsername(String username){
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserDetailsService {
 
     @Transactional
     public Credentials createNewUser(AuthRequest signupRequest){
-        Credentials newCreds = new Credentials(null, signupRequest.getUsername(), passwordEncoder.encode(signupRequest.getPassword()),
+        Credentials newCreds = new Credentials(null, signupRequest.getUsername(), signupRequest.getPassword(),
                 true,true,true,true,
                Authority.USER);
         Credentials createdCreds = credentialRepository.save(newCreds);
