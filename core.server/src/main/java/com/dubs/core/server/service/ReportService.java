@@ -17,9 +17,8 @@ public class ReportService {
     ReportRepository reportRepository;
 
 
-    public void saveReport(HealthReport report){
-        //should map from a DTO?
-        reportRepository.save(report);
+    public HealthReport saveReport(HealthReport report){
+        return reportRepository.save(report);
     }
 
     public List<HealthReport> findAllByUserId(Integer userId){

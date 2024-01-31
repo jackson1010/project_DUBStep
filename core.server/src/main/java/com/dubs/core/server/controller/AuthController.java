@@ -37,6 +37,9 @@ public class AuthController {
     @Autowired
     JWTService jwtService;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     /**
      * @return 200 Success with userId for subsequent calls or 400 BadRequest if username already exists
      */
@@ -78,7 +81,7 @@ public class AuthController {
             JsonObject response = Json.createObjectBuilder().add("Get Profile Error", "User Profile does not Exist").build();
             return ResponseEntity.badRequest().body(response.toString());
         }
-        ObjectMapper objectMapper = new ObjectMapper();
+
         ProfileDTO response =  new ProfileDTO(userId,profile.get(),contactDetails.get());
         return ResponseEntity.ok().body(objectMapper.writeValueAsString(response));
     }
