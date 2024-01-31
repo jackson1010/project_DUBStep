@@ -2,13 +2,19 @@ package com.dubs.core.server.controller;
 
 import com.dubs.core.server.dto.ChatGPTResponse;
 import com.dubs.core.server.dto.GPTRequestDTO;
+import com.dubs.core.server.entity.GPTChatHistory;
+import com.dubs.core.server.entity.HealthReport;
 import com.dubs.core.server.service.ChatGPTService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -17,6 +23,9 @@ public class GptController {
 
     @Autowired
     ChatGPTService gptService;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @PostMapping("/gpt/{userId}")
     public ResponseEntity<String> getGPTResponse(@PathVariable Integer userId, @RequestBody GPTRequestDTO requestDTO) {
@@ -33,4 +42,11 @@ public class GptController {
         }
     }
 
+    @GetMapping("/gpt/getAll/{userid}")
+    public ResponseEntity<String> getAllExchangesByUserId(@PathVariable Integer userid) throws JsonProcessingException {
+
+        List<GPTChatHistory> reports = gptService.findAllByUserId(userid);
+
+        return ResponseEntity.ok().body(objectMapper.writeValueAsString(reports));
+    }
 }

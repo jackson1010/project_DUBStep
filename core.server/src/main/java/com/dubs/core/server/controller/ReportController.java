@@ -39,7 +39,7 @@ public class ReportController {
      * Front end should check if json array length is zero. if zero means user did not upload any reports
      * @throws JsonProcessingException
      */
-    @PostMapping("/getAll/{userid}")
+    @GetMapping("/getAll/{userid}")
     public ResponseEntity<String> getAllReportsByUserId(@PathVariable Integer userid) throws JsonProcessingException {
 
         List<HealthReport> reports = reportService.findAllByUserId(userid);
