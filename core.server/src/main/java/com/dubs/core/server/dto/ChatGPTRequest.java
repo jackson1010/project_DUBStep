@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
 public class ChatGPTRequest {
     private String model;

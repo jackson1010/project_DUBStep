@@ -1,0 +1,3 @@
+ - https://cookbook.openai.com/examples/how_to_format_inputs_to_chatgpt_models
+ - https://platform.openai.com/docs/api-reference/chat/create
+ - https://github.com/TheoKanning/openai-java

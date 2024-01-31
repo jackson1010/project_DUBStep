@@ -24,6 +24,7 @@ uniqueConstraints = {
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+//TODO: RENAME ME
 public class Credentials implements UserDetails {
 
     @Id
