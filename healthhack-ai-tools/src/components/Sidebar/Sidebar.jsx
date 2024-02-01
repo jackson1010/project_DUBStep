@@ -14,6 +14,7 @@ const Sidebar = () => {
     {
       icon: <HealthReportLogo />,
       text: "Report",
+      link: "/report",
     },
     {
       icon: <HealthStatLogo />,
