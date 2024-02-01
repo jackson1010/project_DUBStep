@@ -19,10 +19,12 @@ const Sidebar = () => {
     {
       icon: <HealthStatLogo />,
       text: "Stat",
+      link: "/stat",
     },
     {
       icon: <UserProfileLogo />,
       text: "Profile",
+      link: "/profile",
     },
   ];
   return (

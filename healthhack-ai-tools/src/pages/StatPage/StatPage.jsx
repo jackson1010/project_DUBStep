@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Feature2 = () => {
+const StatPage = () => {
   const [fitbitRecords, setFitbitRecords] = useState([]);
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const Feature2 = () => {
   );
 };
 
-export default Feature2;
+export default StatPage
