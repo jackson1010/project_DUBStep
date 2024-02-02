@@ -5,17 +5,17 @@ const reports = [
   {
     title: "Report 1",
     date: "21 Dec 2023",
-    comments: "Lalalalaa",
+    comments: "Summary of Report 1...",
   },
   {
     title: "Report 2",
     date: "1 Jun 2021",
-    comments: "Hahahahaaaa",
+    comments: "Summary of Report 2...",
   },
   {
     title: "Report 3",
     date: "30 Oct 2020",
-    comments: "Babababaaa",
+    comments: "Summary of Report 3...",
   },
 ];
 const ReportPage = () => {
