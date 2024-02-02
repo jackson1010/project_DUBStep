@@ -1,5 +1,5 @@
 import { Container, Flex, Text, VStack, Link } from "@chakra-ui/react";
-import { useParams, Link as RouterLink  } from "react-router-dom";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import { SkeletonCircle } from "@chakra-ui/react";
 import ProfileTabs from "./ProfileTabs";
 import useGetUserProfileByUsername from "./useGetUserProfileByUsername";
@@ -33,7 +33,7 @@ const ProfilePage = () => {
         borderColor={"whiteAlpha.300"}
         direction={"column"}
       >
-        <ProfileTabs />
+        {/* <ProfileTabs /> */}
       </Flex>
     </Container>
   );
@@ -68,12 +68,18 @@ const UserProfileHeader = ({ userProfile }) => {
 };
 
 const UserNotFound = () => {
-	return (
-		<Flex flexDir='column' textAlign={"center"} mx={"auto"}>
-			<Text fontSize={"2xl"}>User Not Found</Text>
-			<Link as={RouterLink} to={"/"} color={"blue.500"} w={"max-content"} mx={"auto"}>
-				Go home
-			</Link>
-		</Flex>
-	);
+  return (
+    <Flex flexDir="column" textAlign={"center"} mx={"auto"}>
+      <Text fontSize={"2xl"}>User Not Found</Text>
+      <Link
+        as={RouterLink}
+        to={"/"}
+        color={"blue.500"}
+        w={"max-content"}
+        mx={"auto"}
+      >
+        Go home
+      </Link>
+    </Flex>
+  );
 };
