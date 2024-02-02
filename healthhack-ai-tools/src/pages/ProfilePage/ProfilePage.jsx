@@ -19,10 +19,8 @@ const ProfilePage = () => {
         mx={"auto"}
         flexDirection={"column"}
       >
-        {!isLoading && userProfile && (
-          <UserProfileHeader userProfile={userProfile} />
-        )}
-        {isLoading && <UserProfileHeader />}
+        {userProfile && <UserProfileHeader userProfile={userProfile} />}
+        {<UserProfileHeader />}
       </Flex>
       <Flex
         px={{ base: 2, sm: 4 }}
@@ -41,8 +39,19 @@ const ProfilePage = () => {
 export default ProfilePage;
 
 const UserProfileHeader = ({ userProfile }) => {
-  const { name, height, weight, bloodType } = userProfile;
+  if (!userProfile) return null; // Add a check for userProfile existence
 
+  const {
+    user: { firstName, lastName },
+    userProfile: {
+      dateOfBirth,
+      gender,
+      height,
+      weight,
+      bloodType,
+      contactDetails: { address, email, mobileNumber, homeNumber },
+    },
+  } = userProfile;
   return (
     <Flex
       gap={{ base: 4, sm: 10 }}
@@ -59,8 +68,12 @@ const UserProfileHeader = ({ userProfile }) => {
         mx={"auto"}
         flex={1}
       >
-        <Text fontSize="lg">{name}</Text>
+         <Text fontSize="lg">{`${firstName} ${lastName}`}</Text>
+        <Text>{`Date of Birth: ${dateOfBirth}, Gender: ${gender}`}</Text>
         <Text>{`Height: ${height}, Weight: ${weight}, Blood Type: ${bloodType}`}</Text>
+        <Text>{`Address: ${address}`}</Text>
+        <Text>{`Email: ${email}`}</Text>
+        <Text>{`Mobile Number: ${mobileNumber}, Home Number: ${homeNumber}`}</Text>
       </VStack>
     </Flex>
   );
