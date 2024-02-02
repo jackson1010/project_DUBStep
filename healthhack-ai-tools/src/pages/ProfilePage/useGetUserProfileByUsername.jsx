@@ -14,10 +14,34 @@ export const useGetUserProfileByUsername = (username) => {
           throw new Error("Failed to fetch user profile");
         }
         const data = await response.json();
-        setUserProfile(data);
+
+        // Assuming the API response structure has a 'userProfile' property
+        // Modify this part according to your actual API response structure
+        const userProfileData = {
+          userId: data.userId,
+          userProfile: {
+            userId: data.userId,
+            firstName: data.userProfile.firstName,
+            lastName: data.userProfile.lastName,
+            dateOfBirth: data.userProfile.dateOfBirth,
+            gender: data.userProfile.gender,
+            height: data.userProfile.height,
+            weight: data.userProfile.weight,
+            bloodType: data.userProfile.bloodType,
+          },
+          contactDetails: {
+            userId: data.userId,
+            address: data.contactDetails.address,
+            email: data.contactDetails.email,
+            mobileNumber: data.contactDetails.mobileNumber,
+            homeNumber: data.contactDetails.homeNumber,
+          },
+        };
+
+        setUserProfile(userProfileData);
       } catch (error) {
         setError(error.message);
-      } 
+      }
     };
 
     fetchUserProfile();
@@ -26,4 +50,4 @@ export const useGetUserProfileByUsername = (username) => {
   return { userProfile, error };
 };
 
-export default useGetUserProfileByUsername
+export default useGetUserProfileByUsername;
