@@ -1,7 +1,6 @@
 import { Container, Flex, Text, VStack, Link } from "@chakra-ui/react";
 import { useParams, Link as RouterLink } from "react-router-dom";
 import { SkeletonCircle } from "@chakra-ui/react";
-import ProfileTabs from "./ProfileTabs";
 import useGetUserProfileByUsername from "./useGetUserProfileByUsername";
 
 const ProfilePage = () => {
