@@ -36,7 +36,7 @@ public class GptController {
     public ResponseEntity<String> getGPTResponse(@PathVariable Integer userId, @RequestBody GPTRequestDTO requestDTO) {
         try {
             ChatGPTResponse response = gptService.chat(userId,requestDTO.getQuery(), requestDTO.getNumber());
-            return ResponseEntity.ok(response.getContent());
+            return ResponseEntity.ok(response.getContent().replace("-", ""));
         } catch(FeignException e) {
             log.error("FeignException occurred: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error calling GPT API");
@@ -67,7 +67,7 @@ public class GptController {
             try {
                 ChatGPTResponse response = gptService.chat(userId, indicator, requestDTO.getNumber());
                 StringBuilder resultBuilder = new StringBuilder();
-                resultBuilder.append(indi).append("\n").append(response.getContent());
+                resultBuilder.append(indi).append("\n").append(response.getContent().replace("-", ""));
                 String result = resultBuilder.toString();
                 responses.add(result);
             } catch (FeignException e) {
