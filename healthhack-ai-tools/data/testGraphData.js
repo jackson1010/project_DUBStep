@@ -1,19 +1,63 @@
 import { faker } from '@faker-js/faker';
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Saturday'];
+
+export const graphprops = [
+  {data:{
+    labels,
+    datasets: [
+      {
+        label: 'Week 05',
+        data: labels.map(() => faker.datatype.number({ min: 100, max: 150 })),
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+    ],
+  },options:{
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Systolic Blood Pressure (mmHg)',
+      },
+    },
+  }},
+  {data:{
+    labels,
+    datasets: [
+      {
+        label: 'Week 05',
+        data: labels.map(() => faker.datatype.number({ min: 100, max: 300 })),
+        backgroundColor: 'rgba(88, 99, 255, 0.5)',
+      },
+    ],
+  },options:{
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Weekly Activity (mins)',
+      },
+    },
+  }},
+  
+
+
+
+]
 
 export const testGraphData = {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        label: 'Week 05',
+        data: labels.map(() => faker.datatype.number({ min: 100, max: 150 })),
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: 'Dataset 2',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
     ],
   };
@@ -26,7 +70,7 @@ export const testGraphOptions = {
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart',
+      text: 'Systolic Blood Pressure',
     },
   },
 };

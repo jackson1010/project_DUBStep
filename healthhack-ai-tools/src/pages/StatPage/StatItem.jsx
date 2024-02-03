@@ -7,9 +7,6 @@ import {
   } from "@chakra-ui/react";
 
 const StatItem = ({record}) => {
-    console.log(record);
-    console.log(record.id);
-
     return (
     <div style={{ marginTop: "2rem" }}>
     <Card>
