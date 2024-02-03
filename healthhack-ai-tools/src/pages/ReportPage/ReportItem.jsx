@@ -68,7 +68,7 @@ const ReportItem = (_props) => {
       }).then(response => response.text())
         .then(response => {
           let tempArr = detailedExplanations;
-          tempArr.push({ 'point': point, 'details': response.split("\n") });
+          tempArr.push({ 'point': point, 'details': response });
           setDetailedExplanations([...tempArr]);
         })
         .catch(error => console.log("good luck with this: ", error))
@@ -86,7 +86,7 @@ const ReportItem = (_props) => {
             </div>
             <Spacer />
             <Button variant="outline" onClick={toggleShowDetails}>
-              {showDetails ? "Hide explanation" : "Help me understand..."} &nbsp;
+              {showDetails ? "Hide explanation" : "Help me understand"} &nbsp;
               <ChevronRightIcon />
             </Button>
           </Flex>
@@ -137,9 +137,9 @@ const ReportExplanation = (_props) => {
   const handleMoreExplanation = _props.handleMoreExplanation
 
   return (
-    <ul>
-      {points.map(point => <li onClick={() => handleMoreExplanation(point)} key={point}>{point}</li>)}
-    </ul>
+    <div className="detail">
+      {points}
+    </div>
   )
 }
 
