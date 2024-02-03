@@ -1,8 +1,11 @@
 import { InputGroup, InputRightElement, Input, Button } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = ({isLoggedIn, setIsLoggedIn}) => {
+  const navigate = useNavigate()
+
   const [inputs, setInputs] = useState({
     fullName: "",
     username: "",
