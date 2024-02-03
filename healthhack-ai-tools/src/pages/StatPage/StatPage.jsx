@@ -1,8 +1,9 @@
 import { Container,Heading } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { BarGraph } from "../../components/Graph/BarGraph";
-import { testGraphData, testGraphOptions } from "../../../data/testGraphData";
+import { testGraphData, testGraphOptions, graphprops } from "../../../data/testGraphData";
 import StatItem  from "./StatItem"
+import Recommendation from "./Recommendation";
+import GraphPage from "./GraphPage";
 
 const metrics = [{
   "id":1,
@@ -12,6 +13,15 @@ const metrics = [{
   "exerciseTime" : 80
 }]
 
+const recommendation = {
+  heading: "Based on 21 Dec 2023 Medical Checkup and data from your wearable devices",
+analysis: [
+"You might have a possibility of having diabetes, please go for a diabetes health screening.",
+"Your bloodpressure is in a higher range, xx is quite low",
+"Overall, you are healthy in general. Your xx is in a higher range, xx is quite low"
+],
+suggestions: ["Eat less junk food","Drink less coke"]
+}
 
 const StatPage = () => {
   const [fitbitRecords, setFitbitRecords] = useState(metrics);
@@ -29,14 +39,12 @@ const StatPage = () => {
     <>
       <Container maxW={"container.lg"}>
       <Heading as='h2'>External Health Records</Heading>
-      <Container maxW={"container.lg"}>
-      {fitbitRecords.map((record) => (
+      {/* {fitbitRecords.map((record) => (
         <StatItem key={record.id} record={record} />
-      ))}
-    </Container>
-      </Container>
-      <Container maxW={"container.lg"} position="relative" centerContent>
-        <BarGraph chartData={testGraphData} chartOptions={testGraphOptions}/>
+      ))} */}
+      <Recommendation recommendation={recommendation}/>
+
+        <GraphPage graphprops={graphprops} />
       </Container>
     </>
   );
