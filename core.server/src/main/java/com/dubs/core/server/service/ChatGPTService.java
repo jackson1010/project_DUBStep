@@ -13,10 +13,14 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -73,6 +77,18 @@ public class ChatGPTService {
         log.info("GPT Exchange updated: {}", updateResult);
     }
 
+    public List<String> getAdvice(Integer userId, Map<String,String> indicators) {
+        List<String> responses = new ArrayList<>();
+        for (Map.Entry<String, String> entry : indicators.entrySet()) {
+            ChatGPTResponse response = chat(userId, entry.getKey() + ":" + entry.getValue(), 3);
+            StringBuilder resultBuilder = new StringBuilder();
+            resultBuilder.append(entry.getKey()).append("\n").append(response.getContent());
+            String result = resultBuilder.toString();
+            log.info(result);
+            responses.add(result);
+        }
+        return responses;
+    }
     public List<GPTChatHistory> findAllByUserId(Integer userId){
         return gptRespository.findAllByUserId(userId);
     }

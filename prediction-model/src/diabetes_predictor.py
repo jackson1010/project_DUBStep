@@ -4,7 +4,7 @@ from sklearn.tree import DecisionTreeClassifier
 from flask import Flask, jsonify, request
 
 
-df = pd.read_csv("prediction-model/input/diabetes_binary_5050split_health_indicators_BRFSS2015.csv")
+df = pd.read_csv("../input/diabetes_binary_5050split_health_indicators_BRFSS2015.csv")
 
 features = ['HighBP', 'HighChol', 'BMI','PhysActivity', 'Sex', 'Age']
 
