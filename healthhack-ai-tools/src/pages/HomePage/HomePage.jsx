@@ -12,6 +12,7 @@ import {
 
 const HomePage = () => {
     return (
+        <>
         <Container maxW={"container.lg"}>
             <Flex gap={20}>
                 <Box flex={1} py={10}>
@@ -75,7 +76,9 @@ const HomePage = () => {
                     </Text>
                 </Box>
             </Flex>
+
         </Container>
+        </>
     );
 };
 

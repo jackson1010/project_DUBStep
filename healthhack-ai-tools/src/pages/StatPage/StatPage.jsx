@@ -1,4 +1,7 @@
+import { Container } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { BarGraph } from "../../components/Graph/BarGraph";
+import { testGraphData, testGraphOptions } from "../../../data/testGraphData";
 
 const StatPage = () => {
   const [fitbitRecords, setFitbitRecords] = useState([]);
@@ -12,7 +15,8 @@ const StatPage = () => {
   }, []);
 
   return (
-    <div>
+    <>
+      <Container>
       <h1>External Health Records</h1>
       <ul>
         {fitbitRecords.map((record) => (
@@ -23,7 +27,11 @@ const StatPage = () => {
           </li>
         ))}
       </ul>
-    </div>
+      </Container>
+      <Container maxW='3xl' position="relative" centerContent>
+        <BarGraph chartData={testGraphData} chartOptions={testGraphOptions}/>
+      </Container>
+    </>
   );
 };
 
