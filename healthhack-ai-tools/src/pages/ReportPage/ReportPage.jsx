@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Container, Alert, AlertIcon } from "@chakra-ui/react";
 import ReportItem from "./ReportItem";
 import { useState, useEffect } from "react";
 
@@ -17,9 +17,9 @@ const sampleReports = [
   },
   {
     id: 3,
-    doctorName: "Green Rabbit",
+    doctorName: "Jack Sparrow",
     date: "30 Oct 2020",
-    comments: "Summary of Report 3...",
+    comments: "Ultrasound study of the abdomen was performed. Previous ultrasound study dated 23 January 2020 was reviewed.\n\nIncluded sections of the pancreas show no gross abnormality.\n\nMild increased echogenicity of the liver parenchyma compatible with fatty infiltration. No hepatic lesion detected. The common bile duct measures 0.3cm in diameter and is normal in calibre. The gallbladder is unremarkable.\n\nThe spleen measures 8.8 cm and is normal in size.\n\nConclusion: Mild fatty liver. No hepatic lesion detected.",
   },
 ];
 const ReportPage = () => {
@@ -39,11 +39,22 @@ const ReportPage = () => {
   }, []);
 
   return (
+    <div style={{marginTop: '2rem'}}>
     <Container maxW={"container.lg"}>
+      <Container maxW={"container.lg"}>
+        <Alert status="info">
+          <AlertIcon />
+          <div>
+          <p style={{marginBottom: '1em'}}>This report should be interpreted in consultation with your doctor. The displayed information is retrieved from NEHR contributors and explanations are AI-generated. It may not contain all the details provided in the report given to you. </p>
+          <p>The information on HealthAI is not intended to be a subtitute for the advice of a medical professional. You should never disregard or delay in seeking professional medical advice because of something you read on HealthAI. </p>
+          </div>
+        </Alert>
+      </Container>
       {reports.map((report) => (
         <ReportItem key={report.id} report={report} />
       ))}
     </Container>
+    </div>
   );
 };
 
