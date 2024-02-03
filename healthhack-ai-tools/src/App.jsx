@@ -13,7 +13,7 @@ function App() {
   return (
     <PageLayout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
       <Routes>
-        <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<AuthPage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/report" element={<ReportPage />} />
         <Route path="/stat" element={<StatPage />} />
