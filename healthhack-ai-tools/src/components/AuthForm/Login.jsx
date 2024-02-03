@@ -2,9 +2,9 @@ import { Button, Input } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ isLoggedIn, setIsLoggedIn }) => {
+const Login = () => {
   const navigate = useNavigate();
-
+  const isLoggedIn = localStorage.getItem("loginState");
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -12,7 +12,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const handleLogin = () => {
     if (!isLoggedIn) {
-      setIsLoggedIn(!isLoggedIn)
+      localStorage.setItem("loginState", true);
       navigate("/")
     }
   }

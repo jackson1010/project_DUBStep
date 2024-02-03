@@ -1,5 +1,6 @@
 import { Container } from "@chakra-ui/react";
 import ReportItem from "./ReportItem";
+import { useState, useEffect } from "react";
 
 const reports = [
   {
@@ -19,6 +20,17 @@ const reports = [
   },
 ];
 const ReportPage = () => {
+  // const [reports, setReports] = useState([]);
+  const [test, setTest] = useState("hello this is the default info");
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/test/get', {
+      method: 'GET',
+    })
+      .then(response => console.log(response))
+      .catch(error => console.error(error));  
+  })
+
   return (
     <Container maxW={"container.lg"}>
       {reports.map((report) => (

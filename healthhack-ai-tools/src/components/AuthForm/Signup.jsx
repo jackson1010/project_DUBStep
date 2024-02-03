@@ -3,8 +3,9 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Signup = ({isLoggedIn, setIsLoggedIn}) => {
+const Signup = () => {
   const navigate = useNavigate()
+  const isLoggedIn = localStorage.getItem("loginState")
 
   const [inputs, setInputs] = useState({
     fullName: "",
@@ -17,8 +18,21 @@ const Signup = ({isLoggedIn, setIsLoggedIn}) => {
 
   const handleSignup = () => {
     if (!isLoggedIn) {
-      setIsLoggedIn(!isLoggedIn)
-      navigate("/")
+      fetch("http://localhost:8080/api/auth/createAccount", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: inputs.fullName,
+          password: inputs.password,
+        })
+      })
+        .then(response => {
+          console.log(response)
+          localStorage.setItem("loginState", true);
+          navigate("/")    
+        })
     }
   }
 
