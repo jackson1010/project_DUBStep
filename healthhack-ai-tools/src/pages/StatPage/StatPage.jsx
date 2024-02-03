@@ -58,7 +58,7 @@ const StatPage = () => {
     return (
         <>
             <Container maxW={"container.lg"}>
-                <Heading as="h2">External Health Records</Heading>
+                <Heading as="h2"><div style={{marginTop: '2rem'}}>Health Analysis</div></Heading>
                 {/* {fitbitRecords.map((record) => (
         <StatItem key={record.id} record={record} />
       ))} */}

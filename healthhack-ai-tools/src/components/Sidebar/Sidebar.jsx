@@ -17,12 +17,12 @@ const Sidebar = () => {
   const SidebarItems = [
     {
       icon: <HealthReportLogo />,
-      text: "Report",
+      text: "ExplainToMe",
       link: "/report",
     },
     {
       icon: <HealthStatLogo />,
-      text: "Stat",
+      text: "HealthyMe",
       link: "/stat",
     },
     {

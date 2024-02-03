@@ -16,7 +16,7 @@ const HomePage = () => {
         <Container maxW={"container.lg"}>
             <Flex gap={20}>
                 <Box flex={1} py={10}>
-                    <Heading>Welcome to Our Healthcare AI Platform</Heading>
+                    <Heading>Welcome to HealthAI</Heading>
                     <Text>
                         Providing cutting-edge solutions for healthcare
                         innovation and patient care. Utilizing AI for accurate and advanced diagnostics, improving patient outcomes. 
@@ -54,13 +54,13 @@ const HomePage = () => {
                             <h2>
                                 <AccordionButton>
                                     <Box as="span" flex="1" textAlign="left">
-                                        Personalized Treatment Plans
+                                        Personalized Lifestyle Suggestions
                                     </Box>
                                     <AccordionIcon />
                                 </AccordionButton>
                             </h2>
                             <AccordionPanel pb={4}>
-                                Our advanced prescriptive AI tailors healthcare plans based your individual data, such as diet and meal plans, weekly cardio and gym programmes, and advised check-ups and treatment options.
+                                Our advanced prescriptive AI tailors lifestyle plans based your individual data, such as diet and meal plans, weekly cardio and gym programmes, and advised check-ups and treatment options.
                             </AccordionPanel>
                         </AccordionItem>
 

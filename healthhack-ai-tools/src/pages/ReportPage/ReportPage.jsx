@@ -1,23 +1,23 @@
-import { Container, Alert, AlertIcon } from "@chakra-ui/react";
+import { Container, Alert, AlertIcon, Heading } from "@chakra-ui/react";
 import ReportItem from "./ReportItem";
 import { useState, useEffect } from "react";
 
 const sampleReports = [
   {
     id: 1,
-    doctorName: "Diamond Mao",
+    doctorName: "Dr. Diamond Mao",
     date: "21 Dec 2023",
     comments: "The liver surface appears smooth. Its parenchyma shows normal echogenicity. No suspicious hepatic lesion is detected. The gallbladder wall appears normal and Murphy sign is negative. No gallstone is noted. The biliary tree is not dilated and the common duct measures 0.3 cm. The spleen is normal in length (9.6 cm) and no focal splenic lesion is seen. The imaged pancreas is unremarkable.",
   },
   {
     id: 2,
-    doctorName: "Diamond Mao",
+    doctorName: "Dr. Diamond Mao",
     date: "1 Jun 2021",
     comments: "LUMBOSACRAL SPINE (AP, both oblique and lateral views) \n\nThere is spondylolysis demonstrated on the right side at the L5 level. The left L5 pars interarticularis also shows some slight deformity but no discrete defect. The rest of the right and left pars interarticularis appear intact.  \n\nThere is loss of the normal lumbar lordosis, no subluxation or spondylolisthesis is evident. \n\nThe intervertebral disc spaces and bone density are preserved. No sacroilitis is seen.",
   },
   {
     id: 3,
-    doctorName: "Jack Sparrow",
+    doctorName: "Dr. Jack Sparrow",
     date: "30 Oct 2020",
     comments: "Ultrasound study of the abdomen was performed. Previous ultrasound study dated 23 January 2020 was reviewed.\n\nIncluded sections of the pancreas show no gross abnormality.\n\nMild increased echogenicity of the liver parenchyma compatible with fatty infiltration. No hepatic lesion detected. The common bile duct measures 0.3cm in diameter and is normal in calibre. The gallbladder is unremarkable.\n\nThe spleen measures 8.8 cm and is normal in size.\n\nConclusion: Mild fatty liver. No hepatic lesion detected.",
   },
@@ -41,6 +41,7 @@ const ReportPage = () => {
   return (
     <div style={{marginTop: '2rem'}}>
     <Container maxW={"container.lg"}>
+    <Heading as="h2"><div style={{marginBottom: '1rem'}}>Lab/Examination Reports</div></Heading>
       <Container maxW={"container.lg"}>
         <Alert status="info">
           <AlertIcon />
