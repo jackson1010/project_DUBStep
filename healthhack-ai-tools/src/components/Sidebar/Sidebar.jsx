@@ -1,5 +1,5 @@
 import { Box, Flex, Link, Tooltip } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   HealthAILogo,
   HealthAIMobileLogo,
@@ -9,7 +9,9 @@ import {
 } from "../../assets/constants";
 import { BiLogOut } from "react-icons/bi";
 
-const Sidebar = () => {
+const Sidebar = ({isLoggedIn}) => {
+  const navigate = useNavigate()
+
   const SidebarItems = [
     {
       icon: <HealthReportLogo />,
@@ -120,7 +122,7 @@ const Sidebar = () => {
             justifyContent={{ base: "center", md: "flex-start" }}
           >
             <BiLogOut size={25} />
-            <Box display={{ base: "none", md: "block" }}>Logout</Box>
+            <Box display={{ base: "none", md: "block" }} onClick={navigate('/auth')}>{isLoggedIn ? 'Logout' : 'Login/Signup'}</Box>
           </Link>
         </Tooltip>
       </Flex>

@@ -1,6 +1,6 @@
 import { Box, Container, Flex } from "@chakra-ui/react";
 
-const HomePage = () => {
+const HomePage = ({isLoggedIn}) => {
   return (
     <Container maxW={"container.lg"}>
       <Flex gap={20}>
