@@ -2,9 +2,9 @@ import { Button, Input } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ isLoggedIn, setIsLoggedIn }) => {
+const Login = () => {
   const navigate = useNavigate();
-
+  const isLoggedIn = localStorage.getItem("loginState");
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -12,8 +12,26 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const handleLogin = () => {
     if (!isLoggedIn) {
-      setIsLoggedIn(!isLoggedIn)
-      navigate("/")
+      fetch("http://localhost:8080/api/auth/signin", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: inputs.email,
+          password: inputs.password,
+        })
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response.userId)
+          localStorage.setItem("loginState", true);
+          localStorage.setItem("userId", response.userId);
+          navigate("/")
+        })
+        .catch(error => {
+          console.log('good luck, here\'s the error message:', error.error);
+        })
     }
   }
 

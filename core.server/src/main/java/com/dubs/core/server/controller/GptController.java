@@ -21,6 +21,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("api")
+@CrossOrigin(origins="*")
 public class GptController {
 
     @Autowired

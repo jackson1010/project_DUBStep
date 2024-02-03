@@ -9,8 +9,10 @@ import {
 } from "../../assets/constants";
 import { BiLogOut } from "react-icons/bi";
 
-const Sidebar = ({isLoggedIn}) => {
+const Sidebar = () => {
   const navigate = useNavigate()
+
+  const isLoggedIn = localStorage.getItem("loginState");
 
   const SidebarItems = [
     {
@@ -122,7 +124,7 @@ const Sidebar = ({isLoggedIn}) => {
             justifyContent={{ base: "center", md: "flex-start" }}
           >
             <BiLogOut size={25} />
-            <Box display={{ base: "none", md: "block" }} onClick={navigate('/auth')}>{isLoggedIn ? 'Logout' : 'Login/Signup'}</Box>
+            <Box display={{ base: "none", md: "block" }}>{isLoggedIn ? 'Logout' : 'Login/Signup'}</Box>
           </Link>
         </Tooltip>
       </Flex>
