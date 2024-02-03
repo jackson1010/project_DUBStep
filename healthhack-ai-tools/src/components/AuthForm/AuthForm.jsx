@@ -10,7 +10,7 @@ const AuthForm = ({ isLoggedIn, setIsLoggedIn }) => {
 		<>
 			<Box border={"1px solid gray"} borderRadius={4} padding={5}>
 				<VStack spacing={4}>
-					<Image src='/logo.png' h={24} cursor={"pointer"} alt='Healthhack logo' />
+					<Image src='/logo.png' maxH={24} cursor={"pointer"} alt='Healthhack logo' />
 
 					{showLoginComponent ? <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> : <Signup isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
 
