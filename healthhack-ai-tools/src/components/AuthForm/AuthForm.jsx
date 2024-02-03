@@ -3,16 +3,16 @@ import { useState } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
 
-const AuthForm = () => {
-	const [isLogin, setIsLogin] = useState(true);
+const AuthForm = ({ isLoggedIn, setIsLoggedIn }) => {
+	const [showLoginComponent, setShowLoginComponent] = useState(false);
 
 	return (
 		<>
 			<Box border={"1px solid gray"} borderRadius={4} padding={5}>
 				<VStack spacing={4}>
 					<Image src='/logo.png' h={24} cursor={"pointer"} alt='Healthhack logo' />
-					
-					{isLogin ? <Login /> : <Signup />}
+
+					{showLoginComponent ? <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> : <Signup isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
 
 					{/* ---------------- OR -------------- */}
 					<Flex alignItems={"center"} justifyContent={"center"} my={4} gap={1} w={"full"}>
@@ -35,10 +35,10 @@ const AuthForm = () => {
 			<Box border={"1px solid gray"} borderRadius={4} padding={5}>
 				<Flex alignItems={"center"} justifyContent={"center"}>
 					<Box mx={2} fontSize={14}>
-						{isLogin ? "Don't have an account?" : "Already have an account?"}
+						{showLoginComponent ? "Don't have an account?" : "Already have an account?"}
 					</Box>
-					<Box onClick={() => setIsLogin(!isLogin)} color={"blue.500"} cursor={"pointer"}>
-						{isLogin ? "Sign up" : "Log in"}
+					<Box onClick={() => setShowLoginComponent(!showLoginComponent)} color={"blue.500"} cursor={"pointer"}>
+						{showLoginComponent ? "Sign up" : "Log in"}
 					</Box>
 				</Flex>
 			</Box>

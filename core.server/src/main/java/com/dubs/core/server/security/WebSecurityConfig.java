@@ -56,7 +56,7 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/api/auth/createAccount").permitAll()
                     .requestMatchers("/api/auth/signin").permitAll()
-                    .requestMatchers("/api/auth/**").authenticated()
+//                    .requestMatchers("/api/auth/**").authenticated()
                     .anyRequest().permitAll()
             )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //session persistence not required due to token

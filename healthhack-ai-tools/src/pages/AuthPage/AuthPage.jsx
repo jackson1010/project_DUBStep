@@ -1,7 +1,8 @@
 import { Box, Container, Flex, Image, VStack } from "@chakra-ui/react"
 import AuthForm from "../../components/AuthForm/AuthForm"
 
-const AuthPage = () => {
+const AuthPage = ({isLoggedIn, setIsLoggedIn}) => {
+    console.log('is logged in on auth page?? ', isLoggedIn);
   return (
     <Flex minH={"100vh"} justifyContent={"center"} alignItems={"center"} px={4}>
         <Container maxW={"container.md"} padding={0}>            
@@ -13,7 +14,7 @@ const AuthPage = () => {
 
                 {/*Right hand side*/}
                 <VStack spacing={14} align={"stretch"}>
-                    <AuthForm />
+                    <AuthForm isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
                     <Box textAlign={"center"}>
                         Get the app
                     </Box>

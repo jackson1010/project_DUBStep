@@ -1,5 +1,5 @@
 import { Box, Flex, Link, Tooltip } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   HealthAILogo,
   HealthAIMobileLogo,
@@ -7,21 +7,26 @@ import {
   HealthStatLogo,
   UserProfileLogo,
 } from "../../assets/constants";
-import { BiLogOut } from "react-icons/bi"
+import { BiLogOut } from "react-icons/bi";
 
-const Sidebar = () => {
+const Sidebar = ({isLoggedIn}) => {
+  const navigate = useNavigate()
+
   const SidebarItems = [
     {
       icon: <HealthReportLogo />,
       text: "Report",
+      link: "/report",
     },
     {
       icon: <HealthStatLogo />,
       text: "Stat",
+      link: "/stat",
     },
     {
       icon: <UserProfileLogo />,
       text: "Profile",
+      link: "/profile",
     },
   ];
   return (
@@ -34,6 +39,7 @@ const Sidebar = () => {
       top={0}
       left={0}
       px={{ base: 2, md: 4 }}
+      backgroundColor={"#A7C7E7"}
     >
       <Flex direction={"column"} gap={10} w={"full"} height={"full"}>
         <Link
@@ -52,7 +58,7 @@ const Sidebar = () => {
           display={{ base: "block", md: "none" }}
           borderRadius={6}
           _hover={{
-            bg: "gray.500",
+            bg: "#b5d2f0",
           }}
           w={10}
           cursor="pointer"
@@ -76,11 +82,15 @@ const Sidebar = () => {
                 as={RouterLink}
                 alignItems={"center"}
                 gap={4}
-                _hover={{ bg: "gray.500" }}
-                borderRadius={6}
+                _hover={{
+                  // borderBottom: "2px solid white",
+                  backgroundColor: "#b5d2f0",
+                  // bg: "gray.500"
+                }}
+                // borderRadius={6}
                 p={2}
-                w={{base:10, md:"full"}}
-                justifyContent={{base: "center", md:"flex-start"}}
+                w={{ base: 10, md: "full" }}
+                justifyContent={{ base: "center", md: "flex-start" }}
               >
                 {item.icon}
                 <Box display={{ base: "none", md: "block" }}>{item.text}</Box>
@@ -104,7 +114,7 @@ const Sidebar = () => {
             as={RouterLink}
             alignItems={"center"}
             gap={4}
-            _hover={{ bg: "gray.500" }}
+            _hover={{ bg: "#b5d2f0" }}
             borderRadius={6}
             p={2}
             w={{ base: 10, md: "full" }}
@@ -112,9 +122,7 @@ const Sidebar = () => {
             justifyContent={{ base: "center", md: "flex-start" }}
           >
             <BiLogOut size={25} />
-            <Box display={{ base: "none", md: "block" }}>
-                Logout
-            </Box>
+            <Box display={{ base: "none", md: "block" }} onClick={navigate('/auth')}>{isLoggedIn ? 'Logout' : 'Login/Signup'}</Box>
           </Link>
         </Tooltip>
       </Flex>
