@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/reports")
 @Slf4j
+@CrossOrigin(origins="*")
 public class ReportController {
 
     @Autowired

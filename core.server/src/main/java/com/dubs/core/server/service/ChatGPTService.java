@@ -82,7 +82,7 @@ public class ChatGPTService {
         for (Map.Entry<String, String> entry : indicators.entrySet()) {
             ChatGPTResponse response = chat(userId, entry.getKey() + ":" + entry.getValue(), 3);
             StringBuilder resultBuilder = new StringBuilder();
-            resultBuilder.append(entry.getKey()).append("\n").append(response.getContent());
+            resultBuilder.append(entry.getKey()).append("::").append(response.getContent());
             String result = resultBuilder.toString();
             log.info(result);
             responses.add(result);

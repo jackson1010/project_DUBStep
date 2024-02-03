@@ -5,14 +5,10 @@ import java.util.Optional;
 import com.dubs.core.server.service.ChatGPTService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.dubs.core.server.dto.HealthStats;
 import com.dubs.core.server.dto.PredictRequest;
@@ -20,13 +16,11 @@ import com.dubs.core.server.entity.UserProfile;
 import com.dubs.core.server.service.PredictService;
 import com.dubs.core.server.service.UserServiceImpl;
 
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("api")
+@CrossOrigin(origins="*")
 public class PredictionController {
 
     @Autowired
@@ -37,10 +31,6 @@ public class PredictionController {
 
     @Autowired
     private ChatGPTService gptService;
-
-    @Autowired
-    ObjectMapper objectMapper;
-
 
     @GetMapping("/predict/{userId}")
     public ResponseEntity<String> predictDiabetes(@PathVariable Integer userId, HealthStats stats) throws JsonProcessingException {
@@ -54,9 +44,14 @@ public class PredictionController {
          String healthPrediction = predictSvc.getPrediction(predictRequest);
          List<String> healthAdvisory = gptService.getAdvice(userId,predictSvc.generateIndicators(predictRequest,stats));
 
+        JsonArrayBuilder healthAdvisoryArr = Json.createArrayBuilder();
+        for (String prediction: healthAdvisory){
+            healthAdvisoryArr.add(prediction);
+        }
+
         JsonObject response = Json.createObjectBuilder()
                                 .add("healthPrediction", healthPrediction)
-                                .add("healthAdvisory",objectMapper.writeValueAsString(healthAdvisory))
+                                .add("healthAdvisory",healthAdvisoryArr.build())
                                 .build();
         return ResponseEntity.ok().body(response.toString());
     }

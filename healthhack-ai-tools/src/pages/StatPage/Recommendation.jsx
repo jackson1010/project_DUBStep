@@ -13,6 +13,19 @@ import {
 } from "@chakra-ui/react";
 
 const Recommendation = ({ recommendation }) => {
+
+
+    const getIndicator = (text) => {
+         const title = text.split('::',2);
+         return title[0];
+    }
+
+    const getText = (text) => {
+        const body = text.split('::',2);
+        console.log(body[1])
+        return body[1].split("*");
+   }
+
     return (
         <div style={{ marginTop: "2rem" }}>
             <Card>
@@ -20,43 +33,32 @@ const Recommendation = ({ recommendation }) => {
                     <Heading>Your Health Recommendation:</Heading>
                 </CardHeader>
                 <CardBody paddingTop={"0"}>
-                    <Heading size="sm">{recommendation.heading}:</Heading>
+                    <Heading size="sm">{recommendation.healthPrediction}</Heading>
                     <Accordion>
-                        <AccordionItem>
+                    {recommendation.healthAdvisory.map((text, index) => (
+                        <AccordionItem key={index}>
                             <h2>
                                 <AccordionButton>
                                     <Box as="span" flex="1" textAlign="left">
-                                        Our Analysis:
+                                    {index+1}. {getIndicator(text)}
                                     </Box>
                                     <AccordionIcon />
                                 </AccordionButton>
                             </h2>
                             <AccordionPanel pb={4}>
-                                {recommendation.analysis.map((text, index) => (
-                                    <Text key={index}>{index+1}. {text}</Text>
-                                ))}
+                            {getText(text).map((point, index) => (
+                                <Text key={index}> {point}</Text>
+                            ))}
                             </AccordionPanel>
                         </AccordionItem>
-                        <AccordionItem>
-                            <h2>
-                                <AccordionButton>
-                                    <Box as="span" flex="1" textAlign="left">
-                                        Our Recommendations:
-                                    </Box>
-                                    <AccordionIcon />
-                                </AccordionButton>
-                            </h2>
-                            <AccordionPanel pb={4}>
-                            {recommendation.suggestions.map((text, index) => (
-                                    <Text key={index}>{index+1}. {text}</Text>
-                                ))}
-                            </AccordionPanel>
-                        </AccordionItem>
+                        ))}
                     </Accordion>
                 </CardBody>
             </Card>
         </div>
     );
 };
+
+
 
 export default Recommendation;
