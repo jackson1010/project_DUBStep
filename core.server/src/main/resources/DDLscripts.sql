@@ -29,3 +29,55 @@ DESC user_credentials;
 --| enabled                 | tinyint(1)                       | NO   |     | NULL    |                |
 --| authority               | enum('USER','SUPERUSER','ADMIN') | NO   |     | NULL    |                |
 --+-------------------------+----------------------------------+------+-----+---------+----------------+
+
+DROP TABLE IF EXISTS user_profiles;
+CREATE TABLE IF NOT EXISTS user_profiles (
+    id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id SMALLINT UNSIGNED NOT NULL,
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
+    date_of_birth DATE,
+    gender ENUM("MALE","FEMALE","OTHER"),
+    height DOUBLE(5,2),
+    weight DOUBLE(5,2),
+    blood_type ENUM("A_POSITIVE", "A_NEGATIVE","B_POSITIVE","B_NEGATIVE", "O_POSITIVE","O_NEGATIVE","AB_POSITIVE","AB_NEGATIVE"),
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user_credentials(user_id)
+);
+DESC user_profiles;
+--+---------------+-----------------------------------------------------------------------------------------------------------------+------+-----+---------+----------------+
+--| Field         | Type                                                                                                            | Null | Key | Default | Extra          |
+--+---------------+-----------------------------------------------------------------------------------------------------------------+------+-----+---------+----------------+
+--| id            | smallint unsigned                                                                                               | NO   | PRI | NULL    | auto_increment |
+--| user_id       | smallint unsigned                                                                                               | NO   | MUL | NULL    |                |
+--| first_name    | varchar(30)                                                                                                     | YES  |     | NULL    |                |
+--| last_name     | varchar(30)                                                                                                     | YES  |     | NULL    |                |
+--| date_of_birth | date                                                                                                            | YES  |     | NULL    |                |
+--| gender        | enum('MALE','FEMALE','OTHER')                                                                                   | YES  |     | NULL    |                |
+--| height        | double(5,2)                                                                                                     | YES  |     | NULL    |                |
+--| weight        | double(5,2)                                                                                                     | YES  |     | NULL    |                |
+--| blood_type    | enum('A_POSITIVE','A_NEGATIVE','B_POSITIVE','B_NEGATIVE','O_POSITIVE','O_NEGATIVE','AB_POSITIVE','AB_NEGATIVE') | YES  |     | NULL    |                |
+--+---------------+-----------------------------------------------------------------------------------------------------------------+------+-----+---------+----------------+
+
+DROP TABLE IF EXISTS user_contacts;
+CREATE TABLE IF NOT EXISTS user_contacts (
+    id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id SMALLINT UNSIGNED NOT NULL,
+    address VARCHAR(255),
+    email VARCHAR(50),
+    mobile_number VARCHAR(30),
+    home_number VARCHAR(30),
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user_credentials(user_id)
+);
+DESC user_contacts;
+--+---------------+-------------------+------+-----+---------+----------------+
+--| Field         | Type              | Null | Key | Default | Extra          |
+--+---------------+-------------------+------+-----+---------+----------------+
+--| id            | smallint unsigned | NO   | PRI | NULL    | auto_increment |
+--| user_id       | smallint unsigned | NO   | MUL | NULL    |                |
+--| address       | varchar(255)      | YES  |     | NULL    |                |
+--| email         | varchar(50)       | YES  |     | NULL    |                |
+--| mobile_number | varchar(30)       | YES  |     | NULL    |                |
+--| home_number   | varchar(30)       | YES  |     | NULL    |                |
+--+---------------+-------------------+------+-----+---------+----------------+

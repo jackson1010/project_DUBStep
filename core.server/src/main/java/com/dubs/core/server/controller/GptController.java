@@ -1,19 +1,18 @@
 package com.dubs.core.server.controller;
 
-import com.dubs.core.server.dto.ChatGPTRequest;
 import com.dubs.core.server.dto.ChatGPTResponse;
-import com.dubs.core.server.dto.Message;
-import com.dubs.core.server.client.GptClient;
-import com.dubs.core.server.dto.Prompt;
+import com.dubs.core.server.dto.GPTRequestDTO;
+import com.dubs.core.server.entity.GPTChatHistory;
+import com.dubs.core.server.entity.HealthReport;
+import com.dubs.core.server.service.ChatGPTService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,40 +20,33 @@ import java.util.List;
 @RestController
 @RequestMapping("api")
 public class GptController {
-    @Value("${openai.api.key}")
-    private String gptKey;
-    @Value("${openai.model}")
-    private String model;
-    @Value("${openai.temperature}")
-    private double temperature;
-    @Value("${openai.max_tokens}")
-    private int max_tokens;
-    private final GptClient gptClient;
 
-    public GptController(GptClient gptClient) {
-        this.gptClient = gptClient;
-    }
+    @Autowired
+    ChatGPTService gptService;
 
-    @PostMapping("/gpt")
-    public ResponseEntity<String> getGPTResponse(@RequestBody String msg, int number) {
-        ChatGPTRequest request;
-        if(number==1){
-            request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.firstPrompt + msg)));
-        }else{
-            request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.secondPrompt + msg)));
-        }
-        log.info(String.valueOf(request));
+    @Autowired
+    ObjectMapper objectMapper;
 
-        try{
-            ChatGPTResponse response = gptClient.sendPrompt("Bearer " + gptKey, request);
+    @PostMapping("/gpt/{userId}")
+    public ResponseEntity<String> getGPTResponse(@PathVariable Integer userId, @RequestBody GPTRequestDTO requestDTO) {
+        try {
+            ChatGPTResponse response = gptService.chat(userId,requestDTO.getQuery(), requestDTO.getNumber());
             return ResponseEntity.ok(response.getContent());
-        } catch (FeignException e) {
+        } catch(FeignException e) {
             log.error("FeignException occurred: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error calling GPT API");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("Exception occurred: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred");
         }
     }
 
+    @GetMapping("/gpt/getAll/{userid}")
+    public ResponseEntity<String> getAllExchangesByUserId(@PathVariable Integer userid) throws JsonProcessingException {
+
+        List<GPTChatHistory> reports = gptService.findAllByUserId(userid);
+
+        return ResponseEntity.ok().body(objectMapper.writeValueAsString(reports));
+    }
 }

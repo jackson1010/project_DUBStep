@@ -1,6 +1,7 @@
 package com.dubs.core.server.security;
 
 
+import com.dubs.core.server.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 //TODO: remove field injection
     @Autowired
-    UserDetailsServiceImpl userDetailsServiceImpl;
+    UserServiceImpl userDetailsServiceImpl;
 
     @Autowired
     JWTAuthFilter jwtAuthFilter;
@@ -53,9 +54,9 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 //TODO: CHANGE TO VALUE IMPORT
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/auth/signup").permitAll()
+                    .requestMatchers("/api/auth/createAccount").permitAll()
                     .requestMatchers("/api/auth/signin").permitAll()
-                    .requestMatchers("/api/auth/**").authenticated()
+//                    .requestMatchers("/api/auth/**").authenticated()
                     .anyRequest().permitAll()
             )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //session persistence not required due to token

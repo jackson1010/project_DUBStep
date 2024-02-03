@@ -1,12 +1,15 @@
 package com.dubs.core.server.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.SpringQueryMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.dubs.core.server.dto.TranslateRequest;
 import com.dubs.core.server.dto.TranslateResponse;
 
-@FeignClient(name="translate-service",url="https://translation.googleapis.com/language/translate/v2")
+@FeignClient(name="translate-service",url="https://translation.googleapis.com/language/")
 public interface TranslateClient {
-     TranslateResponse getTranslation(@SpringQueryMap TranslateRequest request);
+
+     @PostMapping("translate/v2")
+     TranslateResponse getTranslation(@RequestBody TranslateRequest request);
 }

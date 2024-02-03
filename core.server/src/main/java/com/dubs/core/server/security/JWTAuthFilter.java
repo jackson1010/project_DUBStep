@@ -2,6 +2,7 @@ package com.dubs.core.server.security;
 
 
 import com.dubs.core.server.entity.Credentials;
+import com.dubs.core.server.service.UserServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import java.util.Optional;
 public class JWTAuthFilter extends OncePerRequestFilter {
 
     @Autowired
-    UserDetailsServiceImpl userDetailsSvc;
+    UserServiceImpl userDetailsSvc;
 
     @Autowired
     JWTService jwtSvc;
