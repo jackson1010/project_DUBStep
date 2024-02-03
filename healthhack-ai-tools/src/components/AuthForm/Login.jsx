@@ -12,8 +12,26 @@ const Login = () => {
 
   const handleLogin = () => {
     if (!isLoggedIn) {
-      localStorage.setItem("loginState", true);
-      navigate("/")
+      fetch("http://localhost:8080/api/auth/signin", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: inputs.email,
+          password: inputs.password,
+        })
+      })
+        .then(response => response.json())
+        .then(response => {
+          console.log(response.userId)
+          localStorage.setItem("loginState", true);
+          localStorage.setItem("userId", response.userId);
+          navigate("/")
+        })
+        .catch(error => {
+          console.log('good luck, here\'s the error message:', error.error);
+        })
     }
   }
 

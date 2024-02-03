@@ -28,10 +28,14 @@ const Signup = () => {
           password: inputs.password,
         })
       })
+        .then(response => response.json())
         .then(response => {
-          console.log(response)
           localStorage.setItem("loginState", true);
-          navigate("/")    
+          localStorage.setItem("userId", response['Create Account Success']);
+          navigate("/")
+        })
+        .catch(error => {
+          console.log('good luck, here\'s the error message:', error.error);
         })
     }
   }

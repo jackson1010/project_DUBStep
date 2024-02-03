@@ -8,6 +8,7 @@ const AuthPage = () => {
 
     useEffect(() => {
         localStorage.removeItem("loginState")
+        localStorage.removeItem("userId")
     }, [])
 
     return (

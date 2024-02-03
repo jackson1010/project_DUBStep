@@ -1,0 +1,20 @@
+.gptSection {
+    margin-top: 2rem;
+    min-width: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    
+    .details {
+        width: 95%;
+        justify-content: center;
+        justify-items: center;
+    }
+}
+
+.spinner {
+    display: flex;
+    margin-top: 1rem;
+    justify-items: center;
+    justify-content: center;
+}
