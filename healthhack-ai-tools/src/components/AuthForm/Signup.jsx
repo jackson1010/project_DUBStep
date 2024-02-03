@@ -2,7 +2,7 @@ import { InputGroup, InputRightElement, Input, Button } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
-const Signup = () => {
+const Signup = ({isLoggedIn, setIsLoggedIn}) => {
   const [inputs, setInputs] = useState({
     fullName: "",
     username: "",
