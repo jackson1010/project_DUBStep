@@ -2,14 +2,14 @@ import { Box, Flex } from "@chakra-ui/react"
 import Sidebar from "../../components/Sidebar/Sidebar"
 import { useLocation } from "react-router-dom"
 
-const PageLayout = ({children}) => {
+const PageLayout = ({children, isLoggedIn}) => {
   const {pathname} = useLocation();
   return (
     <Flex>
       {/* sidebar on the left */}
       {pathname !== "/auth" ? (
         <Box w={{base:"70", md:"240px"}}> 
-          <Sidebar />
+          <Sidebar isLoggedIn={isLoggedIn}/>
         </Box>
       ) : null}
       
