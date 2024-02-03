@@ -51,10 +51,13 @@ public class ChatGPTService {
         ChatGPTRequest request;
         if(number==1){
             request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.firstPrompt + msg)));
-        }else{
+        } else if(number==2){
             request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.secondPrompt + msg)));
+        }else if(number==3){
+            request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.thirdPrompt + msg)));
+        }else {
+            ChatGPTResponse response = gptClient.sendPrompt("Bearer " + gptKey, request);
         }
-        ChatGPTResponse response = gptClient.sendPrompt("Bearer " + gptKey, request);
         //TODO: check if will have more than one message
         logChat(userId, request.getMessages().get(0), response.getChoices().get(0));
         return response;
