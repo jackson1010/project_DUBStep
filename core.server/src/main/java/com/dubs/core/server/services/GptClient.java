@@ -1,8 +1,13 @@
-package com.dubs.core.server.client;
+package com.dubs.core.server.services;
 
+import com.dubs.core.server.constants.Constants;
 import com.dubs.core.server.dto.ChatGPTRequest;
 import com.dubs.core.server.dto.ChatGPTResponse;
+import feign.Headers;
+import feign.Param;
+import feign.RequestLine;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;

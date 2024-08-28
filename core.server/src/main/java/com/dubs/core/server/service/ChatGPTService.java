@@ -13,14 +13,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @Service
@@ -52,15 +48,16 @@ public class ChatGPTService {
     }
 
     public ChatGPTResponse chat(Integer userId,String msg,Integer number) throws FeignException {
-        ChatGPTRequest request = null;
+        ChatGPTRequest request;
         if(number==1){
             request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.firstPrompt + msg)));
-        }else if(number==2){
+        } else if(number==2){
             request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.secondPrompt + msg)));
         }else if(number==3){
             request = new ChatGPTRequest(model, 1, temperature, max_tokens, List.of(new Message("user", Prompt.thirdPrompt + msg)));
+        }else {
+            ChatGPTResponse response = gptClient.sendPrompt("Bearer " + gptKey, request);
         }
-        ChatGPTResponse response = gptClient.sendPrompt("Bearer " + gptKey, request);
         //TODO: check if will have more than one message
         logChat(userId, request.getMessages().get(0), response.getChoices().get(0));
         return response;
@@ -77,18 +74,6 @@ public class ChatGPTService {
         log.info("GPT Exchange updated: {}", updateResult);
     }
 
-    public List<String> getAdvice(Integer userId, Map<String,String> indicators) {
-        List<String> responses = new ArrayList<>();
-        for (Map.Entry<String, String> entry : indicators.entrySet()) {
-            ChatGPTResponse response = chat(userId, entry.getKey() + ":" + entry.getValue(), 3);
-            StringBuilder resultBuilder = new StringBuilder();
-            resultBuilder.append(entry.getKey()).append("::").append(response.getContent());
-            String result = resultBuilder.toString();
-            log.info(result);
-            responses.add(result);
-        }
-        return responses;
-    }
     public List<GPTChatHistory> findAllByUserId(Integer userId){
         return gptRespository.findAllByUserId(userId);
     }

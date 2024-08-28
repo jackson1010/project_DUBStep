@@ -2,7 +2,6 @@ package com.dubs.core.server.security;
 
 
 import com.dubs.core.server.entity.Credentials;
-import com.dubs.core.server.service.UserServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +23,7 @@ import java.util.Optional;
 public class JWTAuthFilter extends OncePerRequestFilter {
 
     @Autowired
-    UserServiceImpl userDetailsSvc;
+    UserDetailsServiceImpl userDetailsSvc;
 
     @Autowired
     JWTService jwtSvc;
@@ -47,14 +46,14 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             Credentials userDetails = (Credentials) userDetailsSvc.loadUserByUsername(username);
             if(null != userDetails){
+                //TODO: FIX AUTHORITIES
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null,userDetails.getAuthorities() );
+                        userDetails, null,null );
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 log.info("User Authenticated - Username: {} | UserID: {}",userDetails.getUsername(),userDetails.getUserId());
-            } else { //TODO: IMPROVE HANDLING
-                log.info("User Does Not Exist");
-                filterChain.doFilter(request, response);
+            } else {
+
             }
         }
 

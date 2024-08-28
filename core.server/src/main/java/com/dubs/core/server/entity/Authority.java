@@ -6,29 +6,24 @@ import jakarta.validation.constraints.Min;
 import lombok.*;
 
 @Entity
-@Table(name="user_contacts")
+@Table(name = "authorities", uniqueConstraints = {@UniqueConstraint(columnNames = "authority")}
+)
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContactDetails {
+public class Authority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Max(65535)
     @Min(0)
-    private Integer id;
+    private Integer authority_Id;
 
-    @Max(65535)
-    @Min(0)
-    private Integer userId;
 
-    private String address;
-
-    private String email;
-
-    private String mobileNumber;
-
-    private String homeNumber;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 30)
+    @Max(30)
+    private com.dubs.core.server.enums.Authority authority;
 }

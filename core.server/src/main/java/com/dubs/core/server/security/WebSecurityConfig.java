@@ -1,13 +1,10 @@
 package com.dubs.core.server.security;
 
 
-import com.dubs.core.server.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 //TODO: remove field injection
     @Autowired
-    UserServiceImpl userDetailsServiceImpl;
+    UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Autowired
     JWTAuthFilter jwtAuthFilter;
@@ -32,12 +29,6 @@ public class WebSecurityConfig {
         //default Rounds is 10
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
-
 
     @Bean
     public DaoAuthenticationProvider authenticationProviderDAO() {
@@ -54,9 +45,7 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 //TODO: CHANGE TO VALUE IMPORT
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/auth/createAccount").permitAll()
-                    .requestMatchers("/api/auth/signin").permitAll()
-//                    .requestMatchers("/api/auth/**").authenticated()
+                    .requestMatchers("/api/auth/**").authenticated()
                     .anyRequest().permitAll()
             )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //session persistence not required due to token

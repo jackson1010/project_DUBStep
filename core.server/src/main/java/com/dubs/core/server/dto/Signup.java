@@ -7,8 +7,8 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class GPTRequestDTO {
+public class Signup {
 
-    String query;
-    Integer number;
+    private String username;
+    private String password;
 }

@@ -1,9 +1,9 @@
 package com.dubs.core.server.controller;
 
+import com.dubs.core.server.dto.ChatGPTRequest;
 import com.dubs.core.server.dto.ChatGPTResponse;
-import com.dubs.core.server.dto.GPTRequestDTO;
+
 import com.dubs.core.server.dto.HealthIndicators;
-import com.dubs.core.server.entity.GPTChatHistory;
 import com.dubs.core.server.service.ChatGPTService;
 import com.dubs.core.server.service.IndicatorService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,7 +21,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("api")
-@CrossOrigin(origins="*")
 public class GptController {
 
     @Autowired
@@ -34,10 +33,10 @@ public class GptController {
     ObjectMapper objectMapper;
 
     @PostMapping("/gpt/{userId}")
-    public ResponseEntity<String> getGPTResponse(@PathVariable Integer userId, @RequestBody GPTRequestDTO requestDTO) {
+    public ResponseEntity<String> getGPTResponse(@PathVariable Integer userId, @RequestBody ChatGPTRequest requestDTO) {
         try {
             ChatGPTResponse response = gptService.chat(userId,requestDTO.getQuery(), requestDTO.getNumber());
-            return ResponseEntity.ok(response.getContent().replace("-", ""));
+            return ResponseEntity.ok(response.getContent());
         } catch(FeignException e) {
             log.error("FeignException occurred: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error calling GPT API");
@@ -68,7 +67,7 @@ public class GptController {
             try {
                 ChatGPTResponse response = gptService.chat(userId, indicator, requestDTO.getNumber());
                 StringBuilder resultBuilder = new StringBuilder();
-                resultBuilder.append(indi).append("\n").append(response.getContent().replace("-", ""));
+                resultBuilder.append(indi).append("\n").append(response.getContent());
                 String result = resultBuilder.toString();
                 responses.add(result);
             } catch (FeignException e) {
