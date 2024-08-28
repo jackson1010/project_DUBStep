@@ -2,7 +2,6 @@ package com.dubs.core.server.controller;
 
 import com.dubs.core.server.dto.ChatGPTRequest;
 import com.dubs.core.server.dto.ChatGPTResponse;
-
 import com.dubs.core.server.dto.HealthIndicators;
 import com.dubs.core.server.service.ChatGPTService;
 import com.dubs.core.server.service.IndicatorService;
@@ -35,7 +34,7 @@ public class GptController {
     @PostMapping("/gpt/{userId}")
     public ResponseEntity<String> getGPTResponse(@PathVariable Integer userId, @RequestBody ChatGPTRequest requestDTO) {
         try {
-            ChatGPTResponse response = gptService.chat(userId,requestDTO.getQuery(), requestDTO.getNumber());
+            ChatGPTResponse response = gptService.chat(userId, requestDTO.getMessages().toString(), requestDTO.getN());
             return ResponseEntity.ok(response.getContent());
         } catch(FeignException e) {
             log.error("FeignException occurred: {}", e.getMessage());
@@ -50,14 +49,13 @@ public class GptController {
     @GetMapping("/gpt/getAll/{userid}")
     public ResponseEntity<String> getAllExchangesByUserId(@PathVariable Integer userid) throws JsonProcessingException {
 
-        List<GPTChatHistory> reports = gptService.findAllByUserId(userid);
 
-        return ResponseEntity.ok().body(objectMapper.writeValueAsString(reports));
+        return ResponseEntity.ok().body(objectMapper.writeValueAsString(""));
     }
 
     @PostMapping("/gpt/advice/{userId}")
-    public ResponseEntity<?> getGPTAdviceResponse(@PathVariable Integer userId, @RequestBody GPTRequestDTO requestDTO) {
-        HealthIndicators indicators = indicatorService.getIndicators(requestDTO.getQuery());
+    public ResponseEntity<?> getGPTAdviceResponse(@PathVariable Integer userId, @RequestBody ChatGPTRequest requestDTO) {
+        HealthIndicators indicators = indicatorService.getIndicators(requestDTO.getMessages().toString());
         log.info(indicators.toString());
         List<String> responses = new ArrayList<>();
 
@@ -65,7 +63,7 @@ public class GptController {
                 String[] parts = indicator.split(":");
                 String indi = parts[0].trim();
             try {
-                ChatGPTResponse response = gptService.chat(userId, indicator, requestDTO.getNumber());
+                ChatGPTResponse response = gptService.chat(userId, indicator, requestDTO.getN());
                 StringBuilder resultBuilder = new StringBuilder();
                 resultBuilder.append(indi).append("\n").append(response.getContent());
                 String result = resultBuilder.toString();
